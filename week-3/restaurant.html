@@ -1,0 +1,186 @@
+<!--
+============================================
+; Title: Assignment 3.2
+; Author: Professor Krasso
+; Date: 20 January 2022
+; Modified By: Joel Hartung
+; Description: Restaurant App
+; Code Attribution: HTML <input type="checkbox">
+; URL: https://www.w3schools.com/tags/att_input_type_checkbox.asp
+; Code Attribution: for...of
+; URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
+; Code Attribution: Additional code from the Assignment 3 - Restaurant App document
+; Code Attribution: Additional code from the "WEB 330 HTML, CSS, and JavaScript Requirements" Document
+;===========================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="../theme.css" />
+        <link rel="stylesheet" type="text/css" href="../site.css" />
+        <link rel="stylesheet" type="text/css" href="restaurant.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <script src="../theme.js"></script>
+        <title>WEB 330 - Enterprise JavaScript II</title>
+    </head>
+    <body class="light-theme">
+        <div id="container">
+            <div class="assign-container">
+                <h1 class="app-header">Welcome to the Restaurant App!</h1>
+                <div class="assign-content">
+                    <div class="card">
+                        <div class="card-title">Restaurant Menu</div>
+                            <div class="card-content" id="menu">
+                                <div class="card" id="beverages">
+                                    <div class="card-title">Beverages</div>
+                                    <label>
+                                        <input type="checkbox" id="soda" name="soda" value="3.30">
+                                        Soda ($3.30)
+                                    </label><br />
+                                    <label>
+                                        <input type="checkbox" id="sweet-tea" name="sweet-tea" value="3.30">
+                                        Sweet Tea ($3.30)
+                                    </label><br />
+                                    <label>
+                                        <input type="checkbox" id="iced-coffee" name="iced-coffee" value="2.49">
+                                        Iced Coffee ($2.49)
+                                    </label><br />
+                                    <label>
+                                        <input type="checkbox" id="bottled-water" name="bottled-water" value="2.15">
+                                        Bottled Water ($2.15)
+                                    </label><br />
+                                    
+                                </div>
+                                <div class="card" id="appetizers">
+                                    <div class="card-title">Appetizers</div>                            
+                                        <label>
+                                            <input type="checkbox" id="nachoes" name="nachos" value="6.60">
+                                            Nachos ($6.60)
+                                        </label><br />  
+                                        <label>
+                                            <input type="checkbox" id="chips-and-salsa" name="chips-and-salsa" value="5.50">
+                                            Chips and Salsa ($5.50)
+                                        </label><br />  
+                                        <label>
+                                            <input type="checkbox" id="pretzel" name="pretzel" value="8.80">
+                                            Pretzel with Cheese ($8.80)
+                                        </label><br />  
+                                        <label>
+                                            <input type="checkbox" id="fried-pickles" name="fried-pickles" value="8.25">
+                                            Fried Pickles ($8.25)
+                                        </label><br />                                    
+                                </div>
+                                <div class="card"  id="main-courses">
+                                    <div class="card-title">Main Courses</div>                                    
+                                        <label>
+                                            <input type="checkbox" id="street-tacos" name="street-tacos" value="9.70">
+                                            Street Tacos ($9.70)
+                                        </label><br />  
+                                        <label>
+                                            <input type="checkbox" id="boneless-wings" name="boneless-wings" value="12.80">
+                                            Boneless Wings ($12.80)
+                                        </label><br />  
+                                        <label>
+                                            <input type="checkbox" id="cheeseburger" name="cheeseburger" value="12.65">
+                                            Cheese Burger with Fries ($12.65)
+                                        </label><br />  
+                                        <label>
+                                            <input type="checkbox" id="chicken-wrap" name="chicken-wrap" value="9.65">
+                                            Chicken Wrap with Salad ($9.65)
+                                        </label><br />                                      
+                                </div>
+                                <div class="card"  id="desserts">
+                                    <div class="card-title">Desserts</div>                                    
+                                        <label>
+                                            <input type="checkbox" id="ice-cream" name="ice-cream" value="4.30">
+                                            Ice Cream ($4.30)
+                                        </label><br />  
+                                        <label>
+                                            <input type="checkbox" id="chocolate-cake" name="chocolate-cake" value="5.40">
+                                            Chocolate Cake ($5.40)
+                                        </label><br />  
+                                        <label>
+                                            <input type="checkbox" id="apple-pie" name="apple-pie" value="3.80">
+                                            Apple Pie ($3.80)
+                                        </label><br />  
+                                        <div class="form-field">
+                                            <button type="submit" class="btn btn-primary full-width" id="btnOrder" onclick="function btnOrder()">Place Order</button>
+                                        </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <a href="../index.html" class="return-home">Return</a>
+                    </div>
+                </div>
+            </div>
+            <div class="assign-container">
+                <div class="assign-content">
+                    <div class="card">
+                        <div class="card-title">Order Summary</div>
+                        <div class="card-content assign-results-text" id="order-total"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="module">
+            import { Bill, Beverage, Appetizer, MainCourse, Dessert } from "./index.js";  
+            
+            // Sets the selected theme
+            setSelectedTheme();
+
+            // This function gets the order total when clicked
+            document.getElementById("btnOrder").onclick = function btnOrder() {
+
+                // This code declares the variables
+                const beveragesEl = document.getElementById("beverages");
+                const beverages = beveragesEl.getElementsByTagName("input");
+
+                const appetizersEl = document.getElementById("appetizers");
+                const appetizers = appetizersEl.getElementsByTagName("input");
+
+                const mainCoursesEL = document.getElementById("main-courses");
+                const mainCourses = mainCoursesEL.getElementsByTagName("input");
+
+                const dessertsEL = document.getElementById("desserts");
+                const desserts = dessertsEL.getElementsByTagName("input");
+
+                console.log("The button is working"); // Used for testing
+               
+                // creates a new Bill object (from Bills.js)
+                let bill = new Bill();
+
+                    for (let beverage of beverages) {
+                        if (beverage.checked) {
+                            bill.addBeverage(new Beverage(beverage.name, beverage.value));
+                        }
+                    }
+
+                    for (let appetizer of appetizers) {
+                        if (appetizer.checked) {
+                            bill.addAppetizer(new Appetizer(appetizer.name, appetizer.value));
+                        }
+                    }
+
+
+                    for (let mainCourse of mainCourses) {
+                        if (mainCourse.checked) {
+                            bill.addMainCourse(new MainCourse(mainCourse.name, mainCourse.value));
+                        }
+                    }
+
+                    for (let dessert of desserts) {
+                        if (dessert.checked) {
+                            bill.addDessert(new Dessert(dessert.name, dessert.value));
+                        }
+                    }
+                // Posts the total to the order-total div                   
+                document.getElementById("order-total").innerHTML = `Your order total is $${bill.getTotal()}`;
+                 }
+       
+        </script>
+    </body>
+</html>
