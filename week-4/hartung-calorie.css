@@ -1,0 +1,16 @@
+/*
+============================================
+; Title: hartung-calories.css
+; Author: Professor Krasso
+; Date: 28 January 2022
+; Modified By: Joel Hartung
+; Description: This is a CSS file used for Assignment 4.2
+;===========================================
+*/
+
+#foodList {
+    float: left;
+    color: #df546a;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
