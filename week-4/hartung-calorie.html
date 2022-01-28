@@ -54,9 +54,7 @@
             <div class="assign-content">
                 <div class="card">
                     <div class="card-title">Search Results</div>
-                    <div class="card-content" id="search-results">
-                    </table>
-                    </div>
+                    <div class="card-content" id="search-results"></div>
                 </div>
             </div>
         </div>
@@ -71,13 +69,13 @@
             let txtFoodItemEl = document.getElementById("txtFoodItem");
 
             // On click, gets the search contents
-            document.getElementById("btnSearch").onclick = () =>  {
+            document.getElementById("btnSearch").onclick = () => {
                 let txtFoodItem = txtFoodItemEl.value.toLowerCase();
                 console.log(txtFoodItem);
                 let foods = CalorieConverter.find(txtFoodItem);
                 console.log(foods);
 
-            // Populates the table data
+                // Populates the table data
                 let tableData = `
                 <table>
                     <tr>
@@ -94,7 +92,7 @@
                 }
 
                 // Writes the tableData to the "search-results" div
-                document.getElementById("search-results").innerHTML = tableData;
+                document.getElementById("search-results").innerHTML = tableData + `</table>`;
             };
 
             // Activates the btnSearch when user hits the enter key
@@ -103,7 +101,7 @@
                     document.getElementById("btnSearch").click();
                 }
             });
-            
+
             const foodList = CalorieConverter.data;
 
             // Creates the foodListData string and writes it to the "foodList" div
