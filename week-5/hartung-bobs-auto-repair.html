@@ -1,12 +1,18 @@
 <!--
 ============================================
-; Title: Assignment 4.2
+; Title: Assignment 5.2
 ; Author: Professor Krasso
-; Date: 26 January 2022
+; Date: 3 February 2022
 ; Modified By: Joel Hartung
-; Description: Calorie Converter
-; Code Attribution: KeyUp Event
-; URL: https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event
+; Description: Bob's Auto Repair
+; Code Attribution: import
+; URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
+; Code Attribution: Window Alert
+; URL: https://www.w3schools.com/jsref/met_win_alert.asp
+; Code Attribution: Classes
+; URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+; Code Attribution: HTML DOM Select Object
+; URL: https://www.w3schools.com/jsref/dom_obj_select.asp
 ; Code Attribution: JavaScript For Of Loop
 ; URL: https://www.w3schools.com/js/js_loop_forof.asp
 ; Code Attribution: Additional code from the Assignment 4 document
@@ -18,17 +24,23 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+
+        <!-- CSS Links -->
         <link rel="stylesheet" type="text/css" href="../theme.css" />
         <link rel="stylesheet" type="text/css" href="../site.css" />
         <link rel="stylesheet" type="text/css" href="hartung-bobs-auto-repair.css" />
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+        <!-- Script Links -->
         <script src="../theme.js"></script>
         <script src="cart-component.js"></script>
 
+        <!-- Site Title -->
         <title>WEB 330 - Enterprise JavaScript II</title>
     </head>
     <body class="light-theme">
+        <!-- sets theme to light-theme -->
         <div id="container">
             <div class="assign-container">
                 <h1 class="app-header">Welcome to Bob's Automotive Repair Shop</h1>
@@ -36,12 +48,13 @@
                     <div class="card">
                         <div class="card-title">
                             Product Listing<br />
+                            <!-- inserts the code from cart-component.js -->
                             <cart-component></cart-component>
                         </div>
-
+                        <!-- product drop down menu and selection -->
                         <div class="form">
                             <div class="form-field">
-                                <label for="">Choose a product:</label>
+                                <label for="productList">Choose a product:</label>
                                 <select id="productList" name="productList" class="drop-down-menu">
                                     <option value="select">--Select--</option>
                                     <option value="19.99">Oil Change</option>
@@ -49,18 +62,22 @@
                                     <option value="9.99">Wiper Fluid Refill</option>
                                 </select>
                                 <br />
+                                <!-- displays the cart message -->
                                 <i id="cart-message">To view your shopping cart click on the cart icon</i>
                             </div>
                             <div class="form-field">
+                                <!--Add product button  -->
                                 <button type="submit" class="btn btn-primary full-width" id="btnAddProduct">Add to Cart</button>
                             </div>
                         </div>
                     </div>
                     <br />
+                    <!-- Link to the home page -->
                     <a href="../index.html" class="return-home">Return</a>
                 </div>
             </div>
         </div>
+        <!-- results are posted to this container -->
         <div class="assign-container">
             <div class="assign-content">
                 <div class="card">
@@ -69,34 +86,39 @@
                 </div>
             </div>
         </div>
+
         <script type="module">
-            setSelectedTheme();
-            import { Product } from "./product.js";
-            import { ShoppingCart } from "./shopping-cart.js";
+            // Module allows for importing information from other script files
+            setSelectedTheme(); // sets the selected theme
+            import { Product } from "./product.js"; // imports the Product class from product.js
+            import { ShoppingCart } from "./shopping-cart.js"; // imports the ShoppingCart class from shopping-cart.js
 
-            let shoppingCart = new ShoppingCart();
+            let shoppingCart = new ShoppingCart(); // creates a new Shopping Cart object
 
-            setCartCount();
+            setCartCount(); // calls the setCartCount function
 
+            // adds products to the product list when the btnAddProduct button is clicked
             document.getElementById("btnAddProduct").onclick = () => {
                 let productList = document.getElementById("productList");
                 let product = productList.options[productList.selectedIndex].text;
                 let productValue = productList.options[productList.selectedIndex].value;
-                console.log(product);
+                console.log(product); // used for testing purposes
 
                 if (product.value !== "select") {
                     shoppingCart.add(new Product(product, productValue));
                 }
                 console.log(shoppingCart);
-                setCartCount();
-                alert(`${product} was added to your shopping cart!`);
+                setCartCount(); // calls the setCartCount function
+                alert(`${product} was added to your shopping cart!`); // Alerts the user that a product was added to the cart
             };
 
+            // counts the number of items in the shopping cart array
             function setCartCount() {
                 let cartCount = document.getElementById("cart-count");
                 cartCount.innerHTML = shoppingCart.count();
             }
 
+            // displays the cart table when the cart icon is clicked
             document.getElementById("cartIcon").onclick = () => {
                 let cartDisplayTable = `
                 <table>

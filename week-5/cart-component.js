@@ -7,11 +7,18 @@
 ; Description: cart-component.js
 ; Code Attribution: Classes
 ; URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+; Code Attribution: Super
+; URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/super
+; Code Attribution: Extends
+; URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends
+; Code Attribution: Window.customElements
+; URL: https://developer.mozilla.org/en-US/docs/Web/API/Window/customElements
 ; Code Attribution: Additional code from the Assignment 5 document
 ; Code Attribution: Additional code from the "WEB 330 HTML, CSS, and JavaScript Requirements" Document
 ;===========================================
 */
 
+// Creates the CartComponent class
 class CartComponent extends HTMLElement {
     constructor() {
         super();
