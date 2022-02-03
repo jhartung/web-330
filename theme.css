@@ -158,22 +158,22 @@ h4 {
 table {
     border-collapse: collapse;
     width: 100%;
+    text-align: left;
     margin-bottom: 30px;
 }
 
-th {
-    border: 1px solid var(--table-border-color);
+table th {
     padding-top: 12px;
     padding-bottom: 12px;
-    padding-left: 0.25em;
     text-align: left;
     background-color: var(--table-header-background-color);
     color: var(--table-header-color);
 }
 
-td {
+table td,
+table th {
     border: 1px solid var(--table-border-color);
-    padding-left: 0.25em;
+    padding-left: 8px;
 }
 
 tr:hover {

@@ -1,0 +1,120 @@
+<!--
+============================================
+; Title: Assignment 4.2
+; Author: Professor Krasso
+; Date: 26 January 2022
+; Modified By: Joel Hartung
+; Description: Calorie Converter
+; Code Attribution: KeyUp Event
+; URL: https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event
+; Code Attribution: JavaScript For Of Loop
+; URL: https://www.w3schools.com/js/js_loop_forof.asp
+; Code Attribution: Additional code from the Assignment 4 document
+; Code Attribution: Additional code from the "WEB 330 HTML, CSS, and JavaScript Requirements" Document
+;===========================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="../theme.css" />
+        <link rel="stylesheet" type="text/css" href="../site.css" />
+        <link rel="stylesheet" type="text/css" href="hartung-bobs-auto-repair.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <script src="../theme.js"></script>
+        <script src="cart-component.js"></script>
+
+        <title>WEB 330 - Enterprise JavaScript II</title>
+    </head>
+    <body class="light-theme">
+        <div id="container">
+            <div class="assign-container">
+                <h1 class="app-header">Welcome to Bob's Automotive Repair Shop</h1>
+                <div class="assign-content">
+                    <div class="card">
+                        <div class="card-title">
+                            Product Listing<br />
+                            <cart-component></cart-component>
+                        </div>
+
+                        <div class="form">
+                            <div class="form-field">
+                                <label for="">Choose a product:</label>
+                                <select id="productList" name="productList" class="drop-down-menu">
+                                    <option value="select">--Select--</option>
+                                    <option value="19.99">Oil Change</option>
+                                    <option value="18.44">Filter Replacement</option>
+                                    <option value="9.99">Wiper Fluid Refill</option>
+                                </select>
+                                <br />
+                                <i id="cart-message">To view your shopping cart click on the cart icon</i>
+                            </div>
+                            <div class="form-field">
+                                <button type="submit" class="btn btn-primary full-width" id="btnAddProduct">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <a href="../index.html" class="return-home">Return</a>
+                </div>
+            </div>
+        </div>
+        <div class="assign-container">
+            <div class="assign-content">
+                <div class="card">
+                    <div class="card-title">Shopping Cart</div>
+                    <div class="card-content assign-results-text" id="shoppingCart"></div>
+                </div>
+            </div>
+        </div>
+        <script type="module">
+            setSelectedTheme();
+            import { Product } from "./product.js";
+            import { ShoppingCart } from "./shopping-cart.js";
+
+            let shoppingCart = new ShoppingCart();
+
+            setCartCount();
+
+            document.getElementById("btnAddProduct").onclick = () => {
+                let productList = document.getElementById("productList");
+                let product = productList.options[productList.selectedIndex].text;
+                let productValue = productList.options[productList.selectedIndex].value;
+                console.log(product);
+
+                if (product.value !== "select") {
+                    shoppingCart.add(new Product(product, productValue));
+                }
+                console.log(shoppingCart);
+                setCartCount();
+                alert(`${product} was added to your shopping cart!`);
+            };
+
+            function setCartCount() {
+                let cartCount = document.getElementById("cart-count");
+                cartCount.innerHTML = shoppingCart.count();
+            }
+
+            document.getElementById("cartIcon").onclick = () => {
+                let cartDisplayTable = `
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>`;
+                for (let product of shoppingCart) {
+                    cartDisplayTable += `
+                    <tr>
+                        <td>${product.id}</td>
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                    </tr>`;
+                }
+                document.getElementById("shoppingCart").innerHTML = cartDisplayTable += `</table>`;
+            };
+        </script>
+    </body>
+</html>
