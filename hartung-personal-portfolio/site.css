@@ -6,6 +6,8 @@ body {
 
 #bucket-list {
     list-style-type: none;
+       
+
 }
 
 #banner {
@@ -63,7 +65,6 @@ hr {
 
 #footer {
     font-size: 0.8em;
-    text-align: left;
     height: 100%;
     border-top: 1px solid #5186f5;
     padding: 15px 0 15px 30px;
@@ -74,6 +75,20 @@ hr {
     bottom: 0;
     width: 100%;
 }
+
+#quick-links {
+    padding: 1em;
+    height: auto;
+    list-style-type: none;  
+    text-align: center; 
+}
+
+#quick-links li {
+    display: inline-block;
+    padding: 0px 10px 0px 10px;
+}
+
+
 
 #copyright {
     text-align: center;
@@ -98,7 +113,7 @@ hr {
 }
 
 .assign-content {
-    width: 600px;
+    width: 800px;
     margin: 3% auto 0;
 }
 
@@ -138,6 +153,7 @@ hr {
 
 .card-content {
     padding: 2px 16px;
+    display: inline-block;
 }
 
 .card:hover {
