@@ -1,3 +1,13 @@
+<!--
+============================================
+; Title: Assignment 7.2
+; Author: Professor Krasso
+; Date: 17 February 2022
+; Modified By: Joel Hartung
+; Description: books.xml
+;===========================================
+-->
+
 <books>
     <book>
         <isbn>9780345339683</isbn>
