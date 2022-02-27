@@ -5,17 +5,13 @@
 ; Date: 24 February 2022
 ; Modified By: Joel Hartung
 ; Description: WhatABook, Part 2
-; Code Attribution: HTML DOM Document addEventListener()
-; URL: https://www.w3schools.com/jsref/met_document_addeventlistener.asp
-; Code Attribution: JavaScript For Of Loop
-; URL: https://www.w3schools.com/js/js_loop_forof.asp
-; Code Attribution: DOMparser
-; URL: https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
-; Code Attribution: Element.getElementsByTagName()
-; URL: https://developer.mozilla.org/en-US/docs/Web/API/Element/getElementsByTagName
+; Code Attribution: for... of loop
+. URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
 ; Code Attribution: Document.querySelectorAll()
 ; URL: https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll
-; Code Attribution: Additional code from the Assignment 7 document
+; Code Attribution: Promise.prototype.catch()
+; URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch
+; Code Attribution: Additional code from the Assignment 8 document
 ; Code Attribution: Additional code from the "WEB 330 HTML, CSS, and JavaScript Requirements" Document
 ;===========================================
 -->
@@ -28,6 +24,7 @@
         <!-- CSS Links -->
         <link rel="stylesheet" type="text/css" href="../theme.css" />
         <link rel="stylesheet" type="text/css" href="../site.css" />
+        <link rel="stylesheet" type="text/css" href="./hartung-whatabook2.css" />
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
         <!-- Script Links -->
@@ -43,7 +40,7 @@
                 <div class="card">
                     <div class="card-title">Book Listing</div>
                     <div class="card-content" id="bookList">
-                     
+                     <!--bbookList table will go hereb-->
                     </div>
                 </div>
                 <br />
@@ -56,22 +53,25 @@
             <div class="assign-content">
                 <div class="card">
                     <div class="card-title">Selected Book</div>
-                    <div class="card-content" id="selectedBook"></div>
+                    <div class="card-content" id="selectedBook">
+                        <!-- selectedBook will display here -->
+                    </div>
                 </div>
             </div>
         </div>
 
-        <script type="module">
+        <script type="module"> // allows for script import
 
             setSelectedTheme(); // sets the selected theme
 
-            import { HttpClient } from "./http-client.js"; 
+            import { HttpClient } from "./http-client.js"; // imports HttpClient
             
-            let http = new HttpClient;
+            let http = new HttpClient; // instantiate a new HttpClient object
             
+            // creates isbns array
             let isbns = [
                 "0345339681",
-                "0261103571",
+                "0007637675",
                 "9780593099322",
                 "9780261102361",
                 "9780261102378",
@@ -80,32 +80,31 @@
                 "9780743273565",
                 "9780590405959"
             ];
-            console.log(isbns);
+            console.log(isbns); // used for testing
 
+            // create an object literal named params
             const params = {
                 "bibkeys": `ISBN:${isbns.join(",")}`,
                 "format": "json",
                 "jscmd": "details"
             };
-            console.log(params);
+            console.log(params); // used for testing
 
+            // gets params from the openlibrary.org books api & builds HtmlString
             http.get("https://openlibrary.org/api/books", params).then(res => {
-               
                 document.getElementById("bookList").innerHTML = buildHtmlString(res, "table");
-                console.log(buildHtmlString);
-
                 addIsbnClickEvents();
             })
 
+            // error log
             .catch(e => {
                 console.log(e);
             })
 
+            // getBooks function builds string for selectedBook div
             function getBooks(e) {
                 e.preventDefault();
-
                 let self = this;
-
                 let isbn = self.innerText;
 
                 const params = {
@@ -125,6 +124,7 @@
                 })
             }
 
+        // builds bookTable 
         function buildHtmlString(res, format) {
                 let tableString = `
                 <table id="bookTable" class="table">
@@ -138,7 +138,8 @@
 
                 let ulString = "";
                 console.log(ulString);
-
+                
+                // loops through and adds to ulString and tableString
                 for (let key in res) {
 
                     ulString += "<ul>";
@@ -153,7 +154,8 @@
                                 return author.name;
                             })
                         }
-
+                    
+                    // defines the book object
                     let book = {
                         isbn: res[key].details.isbn_13 ? res[key].details.isbn_13 : res[key].details.isbn_10, // Note: ISBN formats are either "ISBN-13" or "ISBN-10" (older format) [Ref B].
                         title: res[key].details.title,
@@ -162,6 +164,7 @@
                         authors: authors.join(", ")
                     }
 
+                    // body of ulString
                     ulString += `
                     <li><b>ISBN:</b> ${book.isbn}</li>
                     <li><b>Title:</b> ${book.title}</li>
@@ -170,7 +173,7 @@
                     <li><b>Authors:</b> ${book.authors}</li> 
                     `;
                     
-
+                    // body of tableString
                     tableString += `
                     <tr>
                         <td><a href="#" class="isbn-link">${book.isbn}</a></td>
@@ -184,17 +187,19 @@
                 }
             }
 
+            // closes out ulString and tableString
             ulString += "</ul>";
             tableString += "</table>";
 
+            // returns appropriate string
             if (format === "table") {
                 return tableString;
             } else {
                 return ulString;
             }
         }
-    
-
+        
+        //addIsbnClickEvents actives getBooks function on click
         function addIsbnClickEvents() {
             let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
 
