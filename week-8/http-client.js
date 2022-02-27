@@ -11,16 +11,17 @@
 */
 
 export class HttpClient {
-    constructor() {
-        async function get(url, params) {
-            let params = "";
-        }
-        const url = new URL(url)
-        url.search = new URLSearchParams(params);
-        const res = await fetch(url.toString(), {
+        async get(url, params="") {
+                    
+            url = new URL(url)
+
+            url.search = new URLSearchParams(params);
+
+            const res = await fetch(url.toString(), {
             method: "GET",
-        })
-        return res;
+            });
+
+            return res.json;
+        }
     }
-}
 
